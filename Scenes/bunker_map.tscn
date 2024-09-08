@@ -1,0 +1,368 @@
+[gd_scene load_steps=8 format=3 uid="uid://do30y4uw006y3"]
+
+[ext_resource type="PackedScene" uid="uid://cth2v3s8yqwx0" path="res://Scenes/BunkerDoors.tscn" id="1_54kjn"]
+[ext_resource type="Material" uid="uid://dthyfa3d0x3bu" path="res://Materials/bunker_floor_concrete.tres" id="1_bcfji"]
+[ext_resource type="Material" uid="uid://ddjmegux8q8tr" path="res://Materials/bunker_wall_brick.tres" id="2_a7ku1"]
+[ext_resource type="Shader" path="res://Shaders/four_level_posterisation.gdshader" id="3_s3imq"]
+[ext_resource type="Environment" uid="uid://ljq2p7u01oer" path="res://Shaders/Underground_environment.tres" id="4_lgsu7"]
+[ext_resource type="AudioStream" uid="uid://bam3w83nvn32v" path="res://Audio/wind.mp3" id="5_pk34u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4yol"]
+render_priority = 0
+shader = ExtResource("3_s3imq")
+shader_parameter/level1 = Color(0, 0, 0, 1)
+shader_parameter/level2 = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/level3 = Color(1, 1, 1, 1)
+shader_parameter/level4 = Color(1, 1, 1, 1)
+shader_parameter/threshold1 = 0.1
+shader_parameter/threshold2 = 0.4
+shader_parameter/threshold3 = 0.6
+
+[node name="BunkerMap" type="Node3D"]
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(3.41479, 0, 0, 0, 1.00161, 0, 0, 0, 0.946151, 0, -0.510841, -16.7175)
+material_override = ExtResource("1_bcfji")
+use_collision = true
+size = Vector3(10, 1, 35.6671)
+
+[node name="Floor2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.855, 0, 0, 0, 1, 0, 0, 0, 0.944634, 0.32026, 5.44632, -16.478)
+material_override = ExtResource("1_bcfji")
+use_collision = true
+size = Vector3(39.6437, 1, 35.1761)
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 0.211605, 2.44104, 0.367595)
+use_collision = true
+size = Vector3(3.19977, 1.24152, 1)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall14" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 0.211605, 2.44104, -33.2376)
+use_collision = true
+size = Vector3(3.19977, 1.24152, 1)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall15" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 16.4852, 2.44104, -16.4565)
+use_collision = true
+size = Vector3(0.12027, 1.24152, 34.5854)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall16" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -16.2199, 2.44104, -16.4565)
+use_collision = true
+size = Vector3(0.12027, 1.24152, 34.5854)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 4.76039, 2.44104, -6.62583)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.106323, 1.24152, 14.9965)
+material = SubResource("ShaderMaterial_r4yol")
+
+[node name="Wall4" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 3.29557, 2.44104, -12.0644)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.383514, 1.24152, 1.14812)
+
+[node name="Wall6" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 0.0558608, 4.46636, -12.0659)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall7" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 0.0558608, 1.39811, -12.069)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall27" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 14.6013, 4.46636, -17.2823)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall28" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 14.6013, 1.39811, -17.2854)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall29" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -14.3054, 4.46636, -17.2376)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall30" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -14.3054, 1.39811, -17.2407)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall30"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall8" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, -4.72215, 4.46636, -15.4596)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall19" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, 0.0885542, 4.18179, -19.0806)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.107757, 0.309456, 3.11334)
+
+[node name="Wall9" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, -4.72215, 1.39811, -15.4627)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall23" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, -4.68097, 4.46636, -20.8756)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall24" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, -4.68097, 1.39811, -20.8787)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall25" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, 4.75538, 4.46636, -20.8756)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall26" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, 4.75538, 1.39811, -20.8787)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall10" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, 4.77666, 4.46636, -15.3623)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.554474, 1.14891)
+
+[node name="Wall11" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.61986e-07, 0, 0.999308, 0, 6, 0, -10.569, 0, -4.36811e-08, 4.77666, 1.39811, -15.3654)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.234737, 0.473526, 0.555355)
+
+[node name="Wall8" type="CSGBox3D" parent="Wall11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00189656, -0.0403176, -0.0070715)
+material_override = ExtResource("2_a7ku1")
+operation = 2
+size = Vector3(0.123069, 0.392891, 0.615951)
+
+[node name="Wall5" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -3.21269, 2.44104, -12.0644)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.383514, 1.24152, 1.14812)
+
+[node name="Wall12" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 3.29557, 2.44104, -19.0894)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.383514, 1.24152, 1.14812)
+
+[node name="Wall13" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -3.21269, 2.44104, -19.0894)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.383514, 1.24152, 1.14812)
+
+[node name="Wall20" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 0.0854072, 2.44104, -22.72)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(1.00762, 1.24152, 1.14812)
+
+[node name="Wall21" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -9.16954, 2.44104, -17.2593)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.726467, 1.24152, 1.14812)
+
+[node name="Wall22" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 9.21082, 2.44104, -17.2593)
+material_override = ExtResource("2_a7ku1")
+use_collision = true
+size = Vector3(0.781752, 1.24152, 1.14812)
+
+[node name="Wall3" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -4.69037, 2.44104, -6.66824)
+use_collision = true
+size = Vector3(0.106323, 1.24152, 15.1023)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall17" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, -4.69037, 2.44104, -18.1358)
+use_collision = true
+size = Vector3(0.106323, 1.24152, 3.04316)
+material = ExtResource("2_a7ku1")
+
+[node name="Wall18" type="CSGBox3D" parent="."]
+transform = Transform3D(10.569, 0, 0, 0, 6, 0, 0, 0, 0.999308, 4.70089, 2.44104, -18.1358)
+use_collision = true
+size = Vector3(0.106323, 1.24152, 3.04316)
+material = ExtResource("2_a7ku1")
+
+[node name="BunkerDoors" parent="." instance=ExtResource("1_54kjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0690713, 0, -0.0986156)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BunkerDoors"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80953, -0.457891)
+stream = ExtResource("5_pk34u")
+autoplay = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("4_lgsu7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4821, -5.88515)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 3.0
+light_size = 1.0
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4821, -15.5311)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 0.887
+light_size = 0.195
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4602, 4.4821, -8.24955)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 1.893
+light_size = 0.157
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_range = 7.211
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1763, 4.4821, -8.24955)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 1.893
+light_size = 0.157
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_range = 7.211
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4602, 4.4821, -25.6697)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 1.893
+light_size = 0.157
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_range = 3.849
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D8" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.239448, 4.4821, -20.9447)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 1.893
+light_size = 0.157
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_range = 3.849
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1763, 4.4821, -25.6697)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 1.893
+light_size = 0.157
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_range = 3.849
+omni_attenuation = 0.189465
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.693322, 4.4821, -29.1119)
+light_color = Color(0.984819, 0.987271, 0.771779, 1)
+light_energy = 0.887
+light_size = 0.195
+light_specular = 1.567
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 0.0
+omni_attenuation = 0.189465

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dthyfa3d0x3bu"]
+
+[ext_resource type="Texture2D" uid="uid://cp6hw47ah3134" path="res://Textures/bunker_floor_concrete.jpg" id="1_144ic"]
+
+[resource]
+albedo_texture = ExtResource("1_144ic")
+uv1_scale = Vector3(0.45, 0.45, 0.45)
+uv1_triplanar = true

@@ -1,0 +1,120 @@
+[gd_scene load_steps=19 format=3 uid="uid://dw1f82dsfouob"]
+
+[ext_resource type="PackedScene" uid="uid://do30y4uw006y3" path="res://Scenes/bunker_map.tscn" id="1_201g1"]
+[ext_resource type="MeshLibrary" uid="uid://cm0dkgjglncgk" path="res://Items.tres" id="2_kktpl"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_v1h7v"]
+[ext_resource type="Shape3D" uid="uid://cake804vhdwun" path="res://Models/Standing_Hitbox.tres" id="3_3kkkj"]
+[ext_resource type="Shape3D" uid="uid://dhl4q73ejmlil" path="res://Models/Crouching_Hitbox.tres" id="4_ew4en"]
+[ext_resource type="Shader" path="res://Shaders/four_level_posterisation.gdshader" id="5_o5qi2"]
+[ext_resource type="Environment" uid="uid://ljq2p7u01oer" path="res://Shaders/Underground_environment.tres" id="6_vxo0u"]
+[ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="6_x12pr"]
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="8_5kuxu"]
+[ext_resource type="Script" path="res://Scripts/Interact.gd" id="9_mpafu"]
+[ext_resource type="Texture2D" uid="uid://dn87d4rws3exh" path="res://Textures/Item.tres" id="10_0rc50"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_auct7"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 7.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ccik"]
+render_priority = 0
+shader = ExtResource("5_o5qi2")
+shader_parameter/level1 = Color(0.100009, 0.104951, 0.0560403, 1)
+shader_parameter/level2 = Color(0, 0, 0, 1)
+shader_parameter/level3 = Color(0.151433, 0.14511, 0.112785, 1)
+shader_parameter/level4 = Color(1, 1, 1, 1)
+shader_parameter/threshold1 = 0.011
+shader_parameter/threshold2 = 0.007
+shader_parameter/threshold3 = 0.02
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8w0ah"]
+material = SubResource("ShaderMaterial_4ccik")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u74k3"]
+shader = ExtResource("6_x12pr")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_size = 0.01
+shader_parameter/alpha_threshold = 0.5
+shader_parameter/samples = 4.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_25bac"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbmfq"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n4vmr"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Stage" type="Node3D" parent="."]
+
+[node name="BunkerMap" parent="Stage" instance=ExtResource("1_201g1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.10213)
+
+[node name="ItemSpawns" type="GridMap" parent="Stage"]
+mesh_library = ExtResource("2_kktpl")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("2_v1h7v")
+
+[node name="Standing_Hitbox" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = ExtResource("3_3kkkj")
+
+[node name="Crouching_Hitbox" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = ExtResource("4_ew4en")
+disabled = true
+
+[node name="Head" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Eyes" type="Node3D" parent="Player/Head"]
+
+[node name="PlayerCamera" type="Camera3D" parent="Player/Head/Eyes"]
+attributes = SubResource("CameraAttributesPractical_auct7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Head/Eyes/PlayerCamera"]
+transform = Transform3D(1, 0, 0, 0, -4.37113e-08, -1, 0, 0.999999, -4.37114e-08, 0.1, 0, -0.1)
+mesh = SubResource("PlaneMesh_8w0ah")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player/Head/Eyes/PlayerCamera"]
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="Player/Head/Eyes/PlayerCamera/CanvasLayer"]
+material = SubResource("ShaderMaterial_u74k3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Head"]
+environment = ExtResource("6_vxo0u")
+
+[node name="Crouch_RayCast" type="RayCast3D" parent="Player"]
+target_position = Vector3(0, 2, 0)
+
+[node name="Item" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.753628, -4.22527)
+physics_material_override = SubResource("PhysicsMaterial_25bac")
+script = ExtResource("8_5kuxu")
+icon = ExtResource("10_0rc50")
+description = "An item. Seriously?"
+
+[node name="ItemHitbox" type="CollisionShape3D" parent="Item"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00090766, 0.00833154, -0.00203896)
+shape = SubResource("BoxShape3D_jbmfq")
+
+[node name="ItemMesh" type="MeshInstance3D" parent="Item"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000629544, 0.00747502, -0.00175428)
+mesh = SubResource("BoxMesh_n4vmr")
+
+[node name="Interact" type="Node" parent="Item" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../ItemMesh")

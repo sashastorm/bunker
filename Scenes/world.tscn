@@ -1,0 +1,200 @@
+[gd_scene load_steps=18 format=3 uid="uid://dw1f82dsfouob"]
+
+[ext_resource type="PackedScene" uid="uid://do30y4uw006y3" path="res://Scenes/bunker_map.tscn" id="1_201g1"]
+[ext_resource type="NavigationMesh" uid="uid://be3mr7c38115q" path="res://Pathfinding_map.tres" id="2_jggre"]
+[ext_resource type="MeshLibrary" uid="uid://cm0dkgjglncgk" path="res://Items.tres" id="2_kktpl"]
+[ext_resource type="Environment" uid="uid://ljq2p7u01oer" path="res://Shaders/Underground_environment.tres" id="6_vxo0u"]
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="8_5kuxu"]
+[ext_resource type="Texture2D" uid="uid://bcy31im7gctkv" path="res://Textures/InteractionBox.tres" id="9_gv1ap"]
+[ext_resource type="Script" path="res://Scripts/Interact.gd" id="9_mpafu"]
+[ext_resource type="Texture2D" uid="uid://dn87d4rws3exh" path="res://Textures/Item.tres" id="10_0rc50"]
+[ext_resource type="PackedScene" uid="uid://lfv5chmmv0v6" path="res://Scenes/Enemy.tscn" id="10_n2bm3"]
+[ext_resource type="Script" path="res://Scripts/DoorComponent.gd" id="15_ywa8p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_25bac"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jbmfq"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n4vmr"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o640o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_73di2"]
+albedo_color = Color(0.637843, 0.637843, 0.637843, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_up851"]
+material = SubResource("StandardMaterial3D_73di2")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ijk7"]
+
+[node name="World" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.402143, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("6_vxo0u")
+
+[node name="Stage" type="NavigationRegion3D" parent="."]
+navigation_mesh = ExtResource("2_jggre")
+
+[node name="BunkerMap" parent="Stage" instance=ExtResource("1_201g1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.10213)
+
+[node name="ItemSpawns" type="GridMap" parent="Stage"]
+mesh_library = ExtResource("2_kktpl")
+
+[node name="Item" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.753628, -4.22527)
+physics_material_override = SubResource("PhysicsMaterial_25bac")
+script = ExtResource("8_5kuxu")
+icon = ExtResource("10_0rc50")
+description = "An item."
+
+[node name="ItemHitbox" type="CollisionShape3D" parent="Item"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00090766, 0.00833154, -0.00203896)
+shape = SubResource("BoxShape3D_jbmfq")
+
+[node name="ItemMesh" type="MeshInstance3D" parent="Item"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000629544, 0.00747502, -0.00175428)
+mesh = SubResource("BoxMesh_n4vmr")
+
+[node name="Interact" type="Node" parent="Item" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../ItemMesh")
+
+[node name="Door" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.740029, 1.22067, -10.9709)
+physics_material_override = SubResource("PhysicsMaterial_o640o")
+
+[node name="DoorHitbox" type="MeshInstance3D" parent="Door"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.814019, -0.0721414, 0.0758171)
+mesh = SubResource("BoxMesh_up851")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.808916, -0.0721414, 0.0758171)
+shape = SubResource("BoxShape3D_3ijk7")
+
+[node name="DoorComponent" type="Node" parent="Door"]
+script = ExtResource("15_ywa8p")
+door_type = 1
+movement_direction = Vector3(-2.46, 0, 0)
+transition = 11
+easing = 2
+
+[node name="Interact" type="Node" parent="Door" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../DoorHitbox")
+context = "E"
+new_icon = ExtResource("9_gv1ap")
+
+[node name="Door2" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.66442, 1.22067, -13.5817)
+physics_material_override = SubResource("PhysicsMaterial_o640o")
+
+[node name="DoorHitbox" type="MeshInstance3D" parent="Door2"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.814019, -0.0721414, 0.0758171)
+mesh = SubResource("BoxMesh_up851")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door2"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.808916, -0.0721414, 0.0758171)
+shape = SubResource("BoxShape3D_3ijk7")
+
+[node name="DoorComponent" type="Node" parent="Door2"]
+script = ExtResource("15_ywa8p")
+door_type = 1
+forward_direction = 2
+movement_direction = Vector3(-2.46, 0, 0)
+transition = 11
+easing = 2
+
+[node name="Interact" type="Node" parent="Door2" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../../Door/DoorHitbox")
+context = "E"
+new_icon = ExtResource("9_gv1ap")
+
+[node name="Door3" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.66442, 1.22067, -18.9231)
+physics_material_override = SubResource("PhysicsMaterial_o640o")
+
+[node name="DoorHitbox" type="MeshInstance3D" parent="Door3"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.814019, -0.0721414, 0.0758171)
+mesh = SubResource("BoxMesh_up851")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door3"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.808916, -0.0721414, 0.0758171)
+shape = SubResource("BoxShape3D_3ijk7")
+
+[node name="DoorComponent" type="Node" parent="Door3"]
+script = ExtResource("15_ywa8p")
+door_type = 1
+forward_direction = 2
+movement_direction = Vector3(-2.46, 0, 0)
+transition = 11
+easing = 2
+
+[node name="Interact" type="Node" parent="Door3" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../../Door/DoorHitbox")
+context = "E"
+new_icon = ExtResource("9_gv1ap")
+
+[node name="Door4" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.89237, 1.22067, -13.4562)
+physics_material_override = SubResource("PhysicsMaterial_o640o")
+
+[node name="DoorHitbox" type="MeshInstance3D" parent="Door4"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.814019, -0.0721414, -0.0355191)
+mesh = SubResource("BoxMesh_up851")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door4"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.808916, -0.0721414, 0.0758171)
+shape = SubResource("BoxShape3D_3ijk7")
+
+[node name="DoorComponent" type="Node" parent="Door4"]
+script = ExtResource("15_ywa8p")
+door_type = 1
+forward_direction = 2
+transition = 11
+easing = 2
+
+[node name="Interact" type="Node" parent="Door4" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../../Door/DoorHitbox")
+context = "E"
+new_icon = ExtResource("9_gv1ap")
+
+[node name="Door5" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.78274, 1.22067, -18.9568)
+physics_material_override = SubResource("PhysicsMaterial_o640o")
+
+[node name="DoorHitbox" type="MeshInstance3D" parent="Door5"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.814019, -0.0721414, 0.0758171)
+mesh = SubResource("BoxMesh_up851")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door5"]
+transform = Transform3D(1.42387, 0, 0, 0, 2.29982, 0, 0, 0, 0.113526, 0.808916, -0.0721414, 0.0758171)
+shape = SubResource("BoxShape3D_3ijk7")
+
+[node name="DoorComponent" type="Node" parent="Door5"]
+script = ExtResource("15_ywa8p")
+door_type = 1
+forward_direction = 2
+movement_direction = Vector3(-2.46, 0, 0)
+transition = 11
+easing = 2
+
+[node name="Interact" type="Node" parent="Door5" node_paths=PackedStringArray("mesh")]
+script = ExtResource("9_mpafu")
+mesh = NodePath("../../Door/DoorHitbox")
+context = "E"
+new_icon = ExtResource("9_gv1ap")
+
+[node name="Enemy" parent="." instance=ExtResource("10_n2bm3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30.6531)
+player_path = NodePath(".")

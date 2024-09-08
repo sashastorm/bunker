@@ -1,0 +1,9 @@
+[gd_resource type="CurveTexture" load_steps=2 format=3 uid="uid://bcy31im7gctkv"]
+
+[sub_resource type="Curve" id="Curve_w81ty"]
+min_value = -623.89
+max_value = 773.09
+
+[resource]
+width = 47
+curve = SubResource("Curve_w81ty")

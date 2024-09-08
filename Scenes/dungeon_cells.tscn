@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://yvm54tb8yxc"]
+
+[ext_resource type="Texture2D" uid="uid://iib52pgsxxh0" path="res://dungeongeneration/yellow_carpet.jpg" id="1_ekkfq"]
+[ext_resource type="Script" path="res://dungeongeneration/dungeon_cells.gd" id="1_siikj"]
+[ext_resource type="Texture2D" uid="uid://cejvco7h3giec" path="res://dungeongeneration/yellow_ceiling.jpg" id="2_c3hr8"]
+[ext_resource type="Texture2D" uid="uid://cc1vvmapyhbnr" path="res://dungeongeneration/yellow_wall.jpg" id="3_xwkpr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ishqy"]
+albedo_texture = ExtResource("1_ekkfq")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_s45q5"]
+lightmap_size_hint = Vector2i(14, 12)
+material = SubResource("StandardMaterial3D_ishqy")
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frthi"]
+albedo_texture = ExtResource("2_c3hr8")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_u1qg0"]
+material = SubResource("StandardMaterial3D_frthi")
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p36u4"]
+albedo_texture = ExtResource("3_xwkpr")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_cdvto"]
+material = SubResource("StandardMaterial3D_p36u4")
+size = Vector3(1, 2.4, 0.1)
+
+[node name="DungeonCells" type="Node3D"]
+script = ExtResource("1_siikj")
+
+[node name="yellow_floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_s45q5")
+
+[node name="yellow_ceiling" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+mesh = SubResource("BoxMesh_u1qg0")
+
+[node name="yellow_wall_north" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0.45)
+mesh = SubResource("BoxMesh_cdvto")
+
+[node name="yellow_wall_west" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.24537e-08, 0, 1, 0, 1, 0, -1.2, 0, -4.37114e-08, 0.45, 1.25, 0)
+mesh = SubResource("BoxMesh_cdvto")
+
+[node name="yellow_wall_east" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.24537e-08, 0, 1, 0, 1, 0, -1.2, 0, -4.37114e-08, -0.45, 1.25, 0)
+mesh = SubResource("BoxMesh_cdvto")
+
+[node name="yellow_wall_south" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -0.45)
+mesh = SubResource("BoxMesh_cdvto")

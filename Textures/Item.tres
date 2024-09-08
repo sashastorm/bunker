@@ -1,0 +1,7 @@
+[gd_resource type="MeshTexture" load_steps=2 format=3 uid="uid://dn87d4rws3exh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l1vdi"]
+
+[resource]
+mesh = SubResource("BoxMesh_l1vdi")
+image_size = Vector2(100, 100)

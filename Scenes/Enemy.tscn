@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://lfv5chmmv0v6"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_bvywa"]
+[ext_resource type="PackedScene" uid="uid://bjf268kc1cn58" path="res://Scenes/pyramidhead.tscn" id="2_1w4r8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6s1vb"]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_bvywa")
+
+[node name="pyramidhead" parent="." instance=ExtResource("2_1w4r8")]
+transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, 0, 0, -0.27)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00854, 0)
+shape = SubResource("CapsuleShape3D_6s1vb")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

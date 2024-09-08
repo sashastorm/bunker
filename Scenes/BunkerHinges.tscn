@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://clvw813g6bsjh"]
+
+[ext_resource type="Material" uid="uid://b8hen803kb4hu" path="res://Materials/bunker_blast_door.tres" id="1_y77xt"]
+
+[node name="BunkerHinges" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.510205, 0, 0, 0, 0.753639, 0, 0, 0, 0.208629, 0, 0, 0)
+material_override = ExtResource("1_y77xt")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00121379, 0.224299, 0.103196)
+material_override = ExtResource("1_y77xt")
+radius = 0.237
+height = 0.213
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00121379, -0.232813, 0.103196)
+material_override = ExtResource("1_y77xt")
+radius = 0.237
+height = 0.213
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-6.53415e-08, 0, 2.29087, 0, 1, 0, -1.49484, 0, -1.00137e-07, 0.256693, -0.00265585, -0.0107998)
+material_override = ExtResource("1_y77xt")
+radius = 0.209
+height = 0.213
